@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkMr</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('fundo.jpg'); /* Caminho da sua imagem */
+            background-size: cover; /* Garante que a imagem cubra toda a tela */
+            background-position: center; /* Centraliza a imagem */
+            background-attachment: fixed; /* Mantém a imagem fixa ao rolar a página */
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            background: #000000;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: block;
+            object-fit: cover;
+            border: 3px solid #444;
+        }
+        .container h1 {
+            margin-bottom: 25px;
+            font-size: 2em;
+            font-weight: 700;
+        }
+        .link {
+            display: block;
+            background: #222;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 25px;
+            margin: 12px 0;
+            border-radius: 30px;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease-in-out;
+        }
+        .link:hover {
+            background: #444;
+            transform: translateY(-3px);
+        }
+        .link:active {
+            transform: translateY(0);
+        }
+        .counter {
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        #clickMessage {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #ffcc00;
+        }
+        .center-button {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="thiago.png.jpg" alt="Profile Picture" class="profile-image">
+        <h1>Thiago Santafé</h1>
+        <p>Thiago precisa de 10 cliques para virar ditador.</p>
+        <div class="center-button">
+            <button id="clickButton" class="link">Clique Aqui!</button>
+        </div>
+        <div class="counter" id="clickCount">Cliques: 0</div>
+        <div id="clickMessage"></div>
+
+        <!-- Botão para zerar o contador -->
+        <div class="center-button">
+            <button id="resetButton" class="link">Zerar Contador</button>
+        </div>
+    </div>
+
+    <script>
+        // Recuperar o contador de cliques do localStorage
+        let clickCount = localStorage.getItem('clickCount');
+        
+        // Se não houver um contador no localStorage, inicialize com 0
+        if (!clickCount) {
+            clickCount = 0;
+        } else {
+            clickCount = parseInt(clickCount);
+        }
+
+        // Atualizar o contador na tela
+        const clickCountElement = document.getElementById('clickCount');
+        clickCountElement.textContent = `Cliques: ${clickCount}`;
+
+        // Elemento para mostrar a mensagem quando atingir 10 cliques
+        const clickMessageElement = document.getElementById('clickMessage');
+
+        // Função para aumentar o contador e atualizar o localStorage
+        const clickButton = document.getElementById('clickButton');
+        clickButton.addEventListener('click', () => {
+            clickCount++;
+            // Atualizar o contador na tela
+            clickCountElement.textContent = `Cliques: ${clickCount}`;
+            // Armazenar o contador no localStorage
+            localStorage.setItem('clickCount', clickCount);
+
+            // Exibir mensagem ao atingir 10 cliques
+            if (clickCount === 10) {
+                clickMessageElement.textContent = "Thiago agaradece pelos 10 cliques e vá tomar no cu!";
+            } else if (clickCount < 10) {
+                clickMessageElement.textContent = ""; // Limpa a mensagem quando o número de cliques não for 10
+            }
+        });
+
+        // Função para zerar o contador
+        const resetButton = document.getElementById('resetButton');
+        resetButton.addEventListener('click', () => {
+            clickCount = 0; // Zerar o contador
+            clickCountElement.textContent = `Cliques: ${clickCount}`; // Atualizar na tela
+            localStorage.setItem('clickCount', clickCount); // Armazenar no localStorage
+            clickMessageElement.textContent = ""; // Limpar mensagem
+        });
+    </script>
+</body>
+</html>
